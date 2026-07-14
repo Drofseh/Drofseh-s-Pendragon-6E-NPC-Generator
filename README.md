@@ -1,5 +1,4 @@
 # Drofseh's Pendragon 6E NPC Generator
-v1.0.0
 
 Quickly generate NPCs for the Pendragon 6E roleplaying game.
 
