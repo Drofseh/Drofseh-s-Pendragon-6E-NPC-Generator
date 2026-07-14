@@ -4,7 +4,7 @@ import argparse
 import re
 from pathlib import Path
 
-version = "v1.0.0"
+version = "v1.0.1"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

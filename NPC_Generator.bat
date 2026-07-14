@@ -1,7 +1,7 @@
 @echo off
 
 echo Drofseh's Pendragon 6E NPC Generator
-echo v1.0.0
+echo v1.0.1
 echo.
 echo -----
 echo.
@@ -46,7 +46,7 @@ echo.
 echo Supported values are:
 echo Any
 echo.
-set /p chaMaler_born=Birth Year:
+set /p char_born=Birth Year:
 echo.
 echo -----
 echo.
