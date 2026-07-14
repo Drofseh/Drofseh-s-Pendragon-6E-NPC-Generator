@@ -16,6 +16,7 @@ echo Liberties are also occasionally taken to expand the differences between cha
 echo Ex. higher ranking class are given additional skill points based on their rank, and may have the Duty (Vassals) passion.
 echo.
 echo -----
+:START
 echo.
 echo Enter the gender of the character
 echo.
@@ -104,6 +105,23 @@ echo Christian, Pagan, Wodinic, Heathen
 echo.
 set /p char_religion=Religion:
 
+:GENERATE
 python NPC_Generator.py "%char_gender%" "%char_name%" "%char_born%" "%char_homeland%" "%char_lord%" "%char_class%" "%char_culture%" "%char_religion%"
 
-pause
+echo.
+echo Done!
+echo.
+echo What would you like to do now?
+echo.
+echo 1. Generate another NPC using the same input
+echo 2. Start over with new input
+echo 3. Exit
+echo.
+choice /c 123 /n /m "Select an option: "
+
+if errorlevel 3 goto END
+if errorlevel 2 goto START
+if errorlevel 1 goto GENERATE
+
+:END
+exit
