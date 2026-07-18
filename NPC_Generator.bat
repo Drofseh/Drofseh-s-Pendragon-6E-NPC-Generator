@@ -1,7 +1,7 @@
 @echo off
 
 echo Drofseh's Pendragon 6E NPC Generator
-echo v1.0.1
+echo v1.1.0
 echo.
 echo -----
 echo.
@@ -18,6 +18,28 @@ echo.
 echo -----
 :START
 echo.
+echo Enter the culture of the character
+echo.
+echo Default: Randomly selected culture
+echo.
+echo Supported values are:
+echo Cymric, Cornish, Bretons, Cambrian, Cumbrian, Irish, Pictish, Roman, Aquitainian, Greek, Byzantine, Saxon, Anglian, Frankish, Jute, Danish
+echo.
+set /p char_culture=Culture:
+echo.
+echo -----
+echo.
+echo Enter the religion of the character
+echo.
+echo Default: Randomly selected based on culture
+echo.
+echo Supported values are:
+echo Christian, Pagan, Wodinic, Heathen
+echo.
+set /p char_religion=Religion:
+echo.
+echo -----
+echo.
 echo Enter the gender of the character
 echo.
 echo Default: Randomly Selected
@@ -26,6 +48,27 @@ echo Supported values are:
 echo Male, Female
 echo.
 set /p char_gender=Gender:
+echo.
+echo -----
+echo.
+echo Enter the class of the character.
+echo.
+echo Default: Vassal Knight or Lady (depending on character's gender).
+echo.
+echo Supported values are:
+echo Page
+echo.
+echo Squire, Esquire, Mercenary Knight, Household Knight, Vassal Knight, Estate Holder
+echo.
+echo Banneret, Baronet, Baron, Count, Duke, Petty King, King, High King 
+echo.
+echo Handmaiden, Chief Handmaiden, Lady
+echo.
+echo Baroness, Countess, Duchess, Queen
+echo.
+echo Priest
+echo.
+set /p char_class=Class:
 echo.
 echo -----
 echo.
@@ -48,6 +91,19 @@ echo Supported values are:
 echo Any
 echo.
 set /p char_born=Birth Year:
+if "%char_born%"=="" set char_born=487
+echo.
+echo -----
+echo.
+echo Enter the character's age
+echo.
+echo Default: 21
+echo.
+echo Supported values are:
+echo Any
+echo.
+set /p char_age=Age:
+if "%char_age%"=="" set char_age=21
 echo.
 echo -----
 echo.
@@ -70,43 +126,9 @@ echo Supported values are:
 echo Any
 echo.
 set /p char_lord=Lord's Name:
-echo.
-echo -----
-echo.
-echo Enter the class of the character.
-echo.
-echo Default: Vassal Knight or Lady (depending on character's gender).
-echo.
-echo Supported values are:
-echo Squire, Esquire, Mercenary Knight, Household Knight, Vassal Knight, Estate Holder, Banneret, Baronet, Baron, Count, Duke, Petty King, King, High King 
-echo Handmaiden, Chief Handmaiden, Lady, Baroness, Countess, Duchess, Queen
-echo.
-set /p char_class=Class:
-echo.
-echo -----
-echo.
-echo Enter the culture of the character
-echo.
-echo Default: Randomly selected culture
-echo.
-echo Supported values are:
-echo Cymric, Cornish, Bretons, Cambrian, Cumbrian, Irish, Pictish, Roman, Aquitainian, Greek, Byzantine, Saxon, Anglian, Frankish, Jute, Danish
-echo.
-set /p char_culture=Culture:
-echo.
-echo -----
-echo.
-echo Enter the religion of the character
-echo.
-echo Default: Randomly selected based on culture
-echo.
-echo Supported values are:
-echo Christian, Pagan, Wodinic, Heathen
-echo.
-set /p char_religion=Religion:
 
 :GENERATE
-python NPC_Generator.py "%char_gender%" "%char_name%" "%char_born%" "%char_homeland%" "%char_lord%" "%char_class%" "%char_culture%" "%char_religion%"
+python NPC_Generator.py "%char_gender%" "%char_name%" "%char_born%" "%char_age%" "%char_homeland%" "%char_lord%" "%char_class%" "%char_culture%" "%char_religion%"
 
 echo.
 echo Done!

@@ -4,7 +4,9 @@ import argparse
 import re
 from pathlib import Path
 
-version = "v1.0.1"
+version = "v1.1.0"
+
+debug = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -22,8 +24,16 @@ parser.add_argument(
 parser.add_argument(
     "char_born",
     nargs='?',
+    type=int,
     const=487,
     help="Character's birth year."
+)
+parser.add_argument(
+    "char_age",
+    nargs='?',
+    const=21,
+    type=int,
+    help="Character's age."
 )
 parser.add_argument(
     "char_homeland",
@@ -57,15 +67,19 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-#with open("debug.txt", "w") as file:
-#    file.write(str(args))
+if debug:
+    with open("debug.txt", "w") as file:
+        file.write(str(args))
+
 
 def roll_Xd6(dice=1, base=0):
     return base + sum(random.randint(1, 6) for _ in range(dice))
 
 Gender = ["Male", "Female"]
+
 Names_Male = ["Arthur, King Of The Britons", "Brother Maynard", "Camp Guard", "Concorde, Lancelot's Squire", "Dennis", "Frank The Historian", "French Taunter", "Head Monk", "Inspector At End Of Film", "Knight In Battle", "Knight Of Camelot", "Knight Who Says Ni", "Leader Of Robin's Minstrels", "Leader Of The Knights Who Say Ni", "Lord Of Swamp Castle", "Monk", "Musician At Wedding", "Patsy (Arthur's Servant)", "Police Sergeant", "Prince Herbert", "Robin's Minstrel", "Roger The Shrubber", "Servant Crushed By Rabbit", "Sir Bedevere The Wise", "Sir Bors", "Sir Galahad The Pure", "Sir Lancelot The Brave", "Sir Robin The-Not-Quite-So-Brave-As-Sir-Lancelot", "The Black Knight", "The Collector Of The Dead", "The Green Knight", "The Hiccuping Guard", "The Left Head Of The Three-Headed Giant", "The Middle Head Of The Three-Headed Giant", "The Narrator", "The Old Man", "The Right Head Of The Three-Headed Giant", "The Soothsaying Bridgekeeper", "The Voice Of God", "The Weak-Hearted Animator", "Tim The Enchanter", "Villager At Witch Burning"]
 Names_Female = ["Dennis' Mother", "Dingo", "Dr. Piglet", "Dr. Winston", "Frank's Wife", "Miss Islington (The Witch)", "Page Turner", "The Old Crone", "Zoot"]
+
 Cultures = [
     "Anglian",
     "Aquitanian",
@@ -535,6 +549,7 @@ DistinctiveFeatures_Negative_Female = [
     ["Big Ears (-)", "Crooked or Missing Teeth (-)", "Droopy Eyelids (-)", "Eyes of Different Colors (-)", "Freckles (-)", "Green Eyes (-)", "Malformed Nose (-)", "Pockmarks (-)", "Rough (-)", "Scars (-)", "Scraggly Beard (-)", "Unibrow (-)"],
     ["Bellowing Voice (-)", "Nasal Voice (-)", "Lisp (-)", "Mumbly (-)", "Scratchy Voice (-)", "Sharp Voice (-)", "Shrill Voice (-)", "Squeaky Voice (-)", "Stutter (-)", "Thick and Unpleasant Accent (-)"]
 ];
+
 Classes_Martial = ["Squire", "Esquire", "Mercenary Knight", "Household Knight", "Vassal Knight", "Estate Holder", "Banneret", "Baronet", "Baron", "Count", "Duke", "Petty King", "King", "High King"]
 Classes_Ladies = ["Handmaiden", "Chief Handmaiden", "Lady", "Baroness", "Countess", "Duchess", "Queen"]
 Classes_Knighted = ["Mercenary Knight", "Household Knight", "Vassal Knight", "Estate Holder", "Banneret", "Baronet", "Baron", "Count", "Duke", "Petty King", "King", "High King"]
@@ -545,14 +560,23 @@ Classes_Sovereign = ["Petty King", "King", "High King"]
 DistinctiveFeatures_Positive = []
 DistinctiveFeatures_Negative = []
 Passions = ["Fealty (LIEGE)", "Loyalty (Companions)", "Hate (PERSON)", "Hate (GROUP)", "Love (Family)", "Love (PERSON)", "Love (GROUP)", "Adoration (BELOVED)", "Devotion (Deity)", "Chivalry", "Hospitality", "Station"]
-Skills_Knightly = ["Awareness", "Courtesy", "First Aid", "Hunting", "Recognize", "Battle", "Charge", "Sword"]
-Skills_Lady = ["Awareness", "Chirurgery", "Compose", "Courtesy", "Dancing", "Falconry", "Fashion", "First Aid", "Flirting", "Folklore", "Gaming", "Hunting", "Industry", "Intrigue", "Literacy", "Orate", "Play Instrument", "Recognize", "Religion", "Singing", "Stewardship", "Horsemanship"]
+Skills_Courtly = ["Compose", "Courtesy", "Dancing", "Falconry", "Fashion", "Flirting", "Gaming", "Intrigue", "Literacy", "Orate", "Play Instrument", "Recognize", "Religion", "Singing"]
+Skills_Knightly = list(dict.fromkeys(Skills_Courtly + ["Awareness", "Courtesy", "First Aid", "Hunting", "Recognize", "Battle", "Charge", "Sword"]))
+Skills_Lady = list(dict.fromkeys(Skills_Courtly + ["Chirurgery", "Courtesy", "Dancing", "Fashion", "First Aid", "Horsemanship", "Industry", "Play Instrument", "Recognize", "Singing", "Stewardship"]))
+Skills_Minsterly = ["Courtesy", "Industry", "Literacy", "Orate", "Religion", "Singing"]
+
+char_SIZ = 0
+char_DEX = 0
+char_STR = 0
+char_CON = 0
+char_APP = 0
 
 # Personal Info
-char_gender = (args.char_gender or random.choice(Gender)).capitalize()
 char_culture = (args.char_culture or random.choice(Cultures)).capitalize()
+char_gender = (args.char_gender or random.choice(Gender)).capitalize()
 
 if char_culture == "Cymric":
+    char_CON += 3
     Names_Male = Names_Cymric_Male
     Names_Female = Names_Cymric_Female
     religionSelector = random.randint(1, 6)
@@ -561,6 +585,8 @@ if char_culture == "Cymric":
     else:
         Religion = "Pagan"
 elif char_culture == "Cornish":
+    char_CON += 2
+    char_DEX += 1
     Names_Male = Names_Cymric_Male
     Names_Female = Names_Cymric_Female
     religionSelector = random.randint(1, 6)
@@ -569,10 +595,14 @@ elif char_culture == "Cornish":
     else:
         Religion = "Pagan"
 elif char_culture == "Bretons":
+    char_APP += 1
+    char_CON += 2
     Names_Male = Names_Cymric_Male
     Names_Female = Names_Cymric_Female
     Religion = "Christian"
 elif char_culture == "Cambrian":
+    char_CON += 2
+    char_STR += 1
     Names_Male = Names_Cymric_Male
     Names_Female = Names_Cymric_Female
     religionSelector = random.randint(1, 6)
@@ -581,6 +611,8 @@ elif char_culture == "Cambrian":
     else:
         Religion = "Pagan"
 elif char_culture == "Cumbrian":
+    char_CON += 1
+    char_DEX += 2
     Names_Male = Names_Cymric_Male
     Names_Female = Names_Cymric_Female
     religionSelector = random.randint(1, 6)
@@ -589,6 +621,8 @@ elif char_culture == "Cumbrian":
     else:
         Religion = "Pagan"
 elif char_culture == "Saxon":
+    char_SIZ += 2
+    char_STR += 1
     Names_Male = Names_Saxon_Male
     Names_Female = Names_Saxon_Female
     religionSelector = random.randint(1, 6)
@@ -597,6 +631,8 @@ elif char_culture == "Saxon":
     else:
         Religion = "Christian"
 elif char_culture == "Irish":
+    char_CON += 1
+    char_STR += 2
     Names_Male = Names_Irish_Male
     Names_Female = Names_Irish_Female
     religionSelector = random.randint(1, 6)
@@ -605,6 +641,7 @@ elif char_culture == "Irish":
     else:
         Religion = "Pagan"
 elif char_culture == "Pictish":
+    char_DEX += 3
     Names_Male = Names_Pictish_Male
     Names_Female = Names_Pictish_Female
     religionSelector = random.randint(1, 6)
@@ -613,22 +650,31 @@ elif char_culture == "Pictish":
     else:
         Religion = "Pagan"
 elif char_culture == "Roman":
+    char_APP += 1
+    char_DEX += 2
     Names_Male = Names_Roman_Male
     Names_Female = Names_Roman_Female
     Religion = "Christian"
 elif char_culture == "Aquitanian":
+    char_APP += 3
     Names_Male = Names_Aquitanian_Male
     Names_Female = Names_Aquitanian_Female
     Religion = "Christian"
 elif char_culture == "Greek":
+    char_APP += 1
+    char_STR += 2
     Names_Male = Names_Greek_Male
     Names_Female = Names_Greek_Female
     Religion = "Christian"
 elif char_culture == "Byzantine":
+    char_APP += 1
+    char_STR += 2
     Names_Male = Names_Byzantine_Male
     Names_Female = Names_Byzantine_Female
     Religion = "Christian"
 elif char_culture == "Frankish":
+    char_APP += 2
+    char_SIZ += 1
     Names_Male = Names_Frankish_Male
     Names_Female = Names_Frankish_Female
     religionSelector = random.randint(1, 6)
@@ -637,6 +683,8 @@ elif char_culture == "Frankish":
     else:
         Religion = "Christian"
 elif char_culture == "Anglian":
+    char_APP += 1
+    char_SIZ += 2
     Names_Male = Names_Danish_Male
     Names_Female = Names_Danish_Female
     religionSelector = random.randint(1, 6)
@@ -645,6 +693,9 @@ elif char_culture == "Anglian":
     else:
         Religion = "Christian"
 elif char_culture == "Danish":
+    char_APP += 1
+    char_SIZ += 1
+    char_STR += 1
     Names_Male = Names_Danish_Male
     Names_Female = Names_Danish_Female
     religionSelector = random.randint(1, 6)
@@ -653,6 +704,7 @@ elif char_culture == "Danish":
     else:
         Religion = "Christian"
 elif char_culture == "Jute":
+    char_SIZ += 3
     Names_Male = Names_Danish_Male
     Names_Female = Names_Danish_Female
     religionSelector = random.randint(1, 6)
@@ -662,77 +714,55 @@ elif char_culture == "Jute":
         Religion = "Christian"
 
 char_name = (args.char_name or (random.choice(Names_Male) if char_gender == "Male" else random.choice(Names_Female))).title()
+
 char_religion = args.char_religion or Religion
-char_born = args.char_born or 487
-char_homeland = (args.char_homeland or "Salisbury").title()
-char_lord = (args.char_lord or "Robert of Salisbury").title()
+
 char_class = (args.char_class or ("Vassal Knight" if char_gender == "Male" else  "Lady")).title()
+
+char_born = args.char_born or 487
+
+char_age = args.char_age or 21
+if char_class == "Page":
+    char_age = max(7, min(char_age, 14))
+elif char_class == "Squire":
+    char_age = max(14, min(char_age, 21))
+elif char_class == "Handmaiden":
+    char_age = max(14, char_age)
+else:
+    char_age = max(21, char_age)
+
+if char_age < 14:
+    DistinctiveFeatures_Positive_Male.remove("Scraggly Beard (-)")
+    DistinctiveFeatures_Positive_Female.remove("Scraggly Beard (-)")
+if char_age < 21:
+    DistinctiveFeatures_Positive_Male.remove("Luxurious and Combed Beard (+)")
+if char_age < 40:
+    DistinctiveFeatures_Positive_Male.remove("Handsome Grey Hair (+)")
+    DistinctiveFeatures_Positive_Female.remove("Handsome Grey Hair (+)")
+if char_age >= 40:
+    DistinctiveFeatures_Negative_Male.remove("Prematurely Grey Hair (-)")
+    DistinctiveFeatures_Negative_Male.remove("Prematurely Grey Hair (-)")
+if char_age >= 50:
+    DistinctiveFeatures_Negative_Female.remove("Prematurely White Hair (-)")
+    DistinctiveFeatures_Negative_Female.remove("Prematurely White Hair (-)")
+
+char_homeland = (args.char_homeland or "Salisbury").title()
+
+char_lord = (args.char_lord or "Robert of Salisbury").title()
 
 # Characteristics
 if char_gender == "Male":
-    char_SIZ = roll_Xd6(2,5)
-    char_DEX = roll_Xd6(2,5)
-    char_STR = roll_Xd6(2,5)
-    char_CON = roll_Xd6(2,5)
-    char_APP = roll_Xd6(2,5)
+    char_SIZ += roll_Xd6(2,5)
+    char_DEX += roll_Xd6(2,5)
+    char_STR += roll_Xd6(2,5)
+    char_CON += roll_Xd6(2,5)
+    char_APP += roll_Xd6(2,5)
 else:
-    char_SIZ = roll_Xd6(2,4)
-    char_DEX = roll_Xd6(2,6)
-    char_STR = roll_Xd6(2,4)
-    char_CON = roll_Xd6(2,6)
-    char_APP = roll_Xd6(2,9)
-
-if char_culture == "Cymric":
-    char_CON += 3
-elif char_culture == "Cornish":
-    char_CON += 2
-    char_DEX += 1
-elif char_culture == "Bretons":
-    char_APP += 1
-    char_CON += 2
-elif char_culture == "Cambrian":
-    char_CON += 2
-    char_STR += 1
-elif char_culture == "Cumbrian":
-    char_CON += 1
-    char_DEX += 2
-
-elif char_culture == "Saxon":
-    char_SIZ += 2
-    char_STR += 1
-
-elif char_culture == "Irish":
-    char_CON += 1
-    char_STR += 2
-elif char_culture == "Pictish":
-    char_DEX += 3
-
-elif char_culture == "Roman":
-    char_APP += 1
-    char_DEX += 2
-elif char_culture == "Aquitanian":
-    char_APP += 3
-
-elif char_culture == "Greek":
-    char_APP += 1
-    char_STR += 2
-elif char_culture == "Byzantine":
-    char_APP += 1
-    char_STR += 2
-
-elif char_culture == "Frankish":
-    char_APP += 2
-    char_SIZ += 1
-
-elif char_culture == "Anglian":
-    char_APP += 1
-    char_SIZ += 2
-elif char_culture == "Danish":
-    char_APP += 1
-    char_SIZ += 1
-    char_STR += 1
-elif char_culture == "Jute":
-    char_SIZ += 3
+    char_SIZ += roll_Xd6(2,4)
+    char_DEX += roll_Xd6(2,6)
+    char_STR += roll_Xd6(2,4)
+    char_CON += roll_Xd6(2,6)
+    char_APP += roll_Xd6(2,9)
 
 # Features
 if char_gender == "Male":
@@ -743,7 +773,7 @@ else:
     DistinctiveFeatures_Negative = DistinctiveFeatures_Negative_Female
 
 char_features = ""
-if char_APP > 19:
+if char_APP >= 19:
     temp_features = []
     while len(temp_features) < 4:
         temp_feature = random.choice(random.choice(DistinctiveFeatures_Positive))
@@ -751,7 +781,7 @@ if char_APP > 19:
             temp_features.append(temp_feature)
     char_features = ", ".join(temp_features)
 elif char_APP < 6:
-    char_features = "At Death's Door"
+    char_features = "At Death's Door (-)"
 else:
     match char_APP:
         case 6 | 7:
@@ -878,7 +908,7 @@ char_PassionsValues.append(roll_Xd6(2,3))
 char_PassionsNames.append("Devotion (Deity)")
 char_PassionsValues.append(roll_Xd6(1,2))
 
-if char_homeland == "Salisbury":
+if char_homeland == "Salisbury" and char_culture != "Saxon":
     char_passionHateSaxon = roll_Xd6(1,2)
     char_PassionsNames.append("Hate (Saxons)")
     char_PassionsValues.append(char_passionHateSaxon)
@@ -997,6 +1027,15 @@ Skills_Combat = [
     "Battle", "Horsemanship", "Sword", "Charge",
     "Spear", "Hafted", "2H Hafted", "Brawling",
     "Bow", "Crossbow", "Thrown Weapon", "Siegecraft"
+]
+
+Skills_NonKnightly = [
+    "Chirurgery", "Compose", "Courtesy",
+    "Dancing", "Falconry", "Fashion", "First Aid",
+    "Flirting", "Folklore", "Gaming", "Hunting",
+    "Industry", "Intrigue", "Literacy",
+    "Orate", "Play Instrument", "Recognize",
+    "Religion", "Singing", "Stewardship"
 ]
 
 if char_class in Classes_Martial:
@@ -1134,8 +1173,8 @@ else:
         "Spear": 0,
         "Hafted": 0,
         "2H Hafted": 0,
-        "Brawling": 0,
-        "Bow": temp_skillSTR,
+        "Brawling": temp_skillSTR,
+        "Bow": 0,
         "Crossbow": 0,
         "Thrown Weapon": 0,
         "Siegecraft": 5,
@@ -1250,11 +1289,10 @@ else:
     char_familyCharacteristics.append(tempCharacteristic)
     char_skills[FamilyCharacteristics[tempCharacteristic]] += 3
 
-ExtraSkillPoints = 8
-if char_class in Classes_Martial:
+ExtraSkillPoints = max(1, round(8 + ((char_age - 21) / 2)))
+if char_class in Classes_Knighted:
+    ExtraSkillPoints += 5
     ExtraSkillPoints += (Classes_Martial.index(char_class))
-    if char_class in Classes_Knighted:
-        ExtraSkillPoints += 5
     for _ in range(ExtraSkillPoints):
         if char_skills["Sword"] < 10:
             tempSkill = "Sword"
@@ -1265,23 +1303,48 @@ if char_class in Classes_Martial:
         else:
             tempSkill = random.choice(Skills_Knightly)
         char_skills[tempSkill] += 1
-elif char_class in Classes_Ladies:
-    ExtraSkillPoints += (Classes_Ladies.index(char_class)) * 2
-    for _ in range(ExtraSkillPoints):
-        tempSkill = random.choice(Skills_Lady)
-        char_skills[tempSkill] += 1
-else:
-    for _ in range(ExtraSkillPoints):
-        tempSkill = random.choice(list(char_skills.keys()))
-        char_skills[tempSkill] += 1
 
-if char_class in Classes_Knighted:
     if char_skills["Brawling"] < 10:
         char_skills["Brawling"] = 10
     if char_skills["Charge"] < 10:
         char_skills["Charge"] = 10
     if char_skills["Sword"] < 10:
         char_skills["Sword"] = 10
+
+elif char_class == "Esquire":
+    for _ in range(ExtraSkillPoints):
+        tempSkill = random.choice(Skills_Knightly)
+        char_skills[tempSkill] += 1
+
+elif char_class == "Squire":
+    while ExtraSkillPoints > 0:
+        tempSkill = random.choice(Skills_Knightly)
+        if (char_skills[tempSkill] <= 15):
+            char_skills[tempSkill] += 1
+            ExtraSkillPoints -= 1
+
+elif char_class == "Page":
+    while ExtraSkillPoints > 0:
+        tempSkill = random.choice(Skills_Courtly)
+        if (char_skills[tempSkill] <= 10):
+            char_skills[tempSkill] += 1
+            ExtraSkillPoints -= 1
+
+elif char_class in Classes_Ladies:
+    ExtraSkillPoints += (Classes_Ladies.index(char_class)) * 2
+    for _ in range(ExtraSkillPoints):
+        tempSkill = random.choice(Skills_Lady)
+        char_skills[tempSkill] += 1
+
+elif char_class == "Priest":
+    for _ in range(ExtraSkillPoints):
+        tempSkill = random.choice(Skills_Minsterly)
+        char_skills[tempSkill] += 1
+
+else:
+    for _ in range(ExtraSkillPoints):
+        tempSkill = random.choice(list(char_skills.keys()))
+        char_skills[tempSkill] += 1
 
 # Print to file
 def safe_filename(text):
@@ -1297,6 +1360,7 @@ with filename.open("w", encoding="utf-8") as sys.stdout:
     print("Name:", "", char_name, sep="\t")
     print("Gender:", "", char_gender, sep="\t")
     print("Born:", "", char_born, sep="\t")
+    print("Age:", "", char_age, sep="\t")
     print("Homeland:", char_homeland, sep="\t")
     print("Lord:", "", char_lord, sep="\t")
     print("Class:", "", char_class, sep="\t")
