@@ -741,9 +741,9 @@ if char_age < 40:
     DistinctiveFeatures_Positive_Female[2].remove("Handsome Grey Hair (+)")
 if char_age >= 40:
     DistinctiveFeatures_Negative_Male[2].remove("Prematurely Grey Hair (-)")
-    DistinctiveFeatures_Negative_Male[2].remove("Prematurely Grey Hair (-)")
+    DistinctiveFeatures_Negative_Female[2].remove("Prematurely Grey Hair (-)")
 if char_age >= 50:
-    DistinctiveFeatures_Negative_Female[2].remove("Prematurely White Hair (-)")
+    DistinctiveFeatures_Negative_Male[2].remove("Prematurely White Hair (-)")
     DistinctiveFeatures_Negative_Female[2].remove("Prematurely White Hair (-)")
 
 char_homeland = (args.char_homeland or "Salisbury").title()
