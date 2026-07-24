@@ -77,9 +77,6 @@ def roll_Xd6(dice=1, base=0):
 
 Gender = ["Male", "Female"]
 
-Names_Male = ["Arthur, King Of The Britons", "Brother Maynard", "Camp Guard", "Concorde, Lancelot's Squire", "Dennis", "Frank The Historian", "French Taunter", "Head Monk", "Inspector At End Of Film", "Knight In Battle", "Knight Of Camelot", "Knight Who Says Ni", "Leader Of Robin's Minstrels", "Leader Of The Knights Who Say Ni", "Lord Of Swamp Castle", "Monk", "Musician At Wedding", "Patsy (Arthur's Servant)", "Police Sergeant", "Prince Herbert", "Robin's Minstrel", "Roger The Shrubber", "Servant Crushed By Rabbit", "Sir Bedevere The Wise", "Sir Bors", "Sir Galahad The Pure", "Sir Lancelot The Brave", "Sir Robin The-Not-Quite-So-Brave-As-Sir-Lancelot", "The Black Knight", "The Collector Of The Dead", "The Green Knight", "The Hiccuping Guard", "The Left Head Of The Three-Headed Giant", "The Middle Head Of The Three-Headed Giant", "The Narrator", "The Old Man", "The Right Head Of The Three-Headed Giant", "The Soothsaying Bridgekeeper", "The Voice Of God", "The Weak-Hearted Animator", "Tim The Enchanter", "Villager At Witch Burning"]
-Names_Female = ["Dennis' Mother", "Dingo", "Dr. Piglet", "Dr. Winston", "Frank's Wife", "Miss Islington (The Witch)", "Page Turner", "The Old Crone", "Zoot"]
-
 Cultures = [
     "Anglian",
     "Aquitanian",
