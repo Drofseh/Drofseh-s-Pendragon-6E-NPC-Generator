@@ -31,7 +31,7 @@ parser.add_argument(
 parser.add_argument(
     "char_age",
     nargs='?',
-    const=21,
+    const=-1,
     type=int,
     help="Character's age."
 )
@@ -721,17 +721,19 @@ char_class = (args.char_class or ("Vassal Knight" if char_gender == "Male" else 
 
 char_born = args.char_born or 487
 
-char_age = args.char_age or 21
+char_age = args.char_age or random.randint(14, 75)
+if char_age == -1:
+    char_age = random.randint(14, 75)
 if char_class == "Page":
-    char_age = max(7, min(char_age, 14))
+    char_age = max(7, min(char_age, 13))
 elif char_class == "Squire":
-    char_age = max(14, min(char_age, 21))
+    char_age = max(14, min(char_age, 20))
 elif char_class == "Handmaiden":
     char_age = max(14, char_age)
 else:
     char_age = max(21, char_age)
 
-if char_age < 14:
+if char_age < 13:
     DistinctiveFeatures_Positive_Male.remove("Scraggly Beard (-)")
     DistinctiveFeatures_Positive_Female.remove("Scraggly Beard (-)")
 if char_age < 21:
@@ -817,6 +819,19 @@ else:
                     temp_features.append(temp_feature)
             char_features = ", ".join(temp_features)
 
+# Reduce charateristic values for younger characters
+if char_age < 13:
+    char_SIZ = round(char_SIZ * 0.5)
+    char_DEX = round(char_SIZ * 0.5)
+    char_STR = round(char_SIZ * 0.5)
+    char_CON = round(char_SIZ * 0.5)
+    char_APP = round(char_SIZ * 0.5)
+elif char_age < 21:
+    char_SIZ = round(char_SIZ * 0.75)
+    char_DEX = round(char_SIZ * 0.75)
+    char_STR = round(char_SIZ * 0.75)
+    char_CON = round(char_SIZ * 0.75)
+    char_APP = round(char_SIZ * 0.75)
 # Derived Characteristics
 char_knockdown = char_SIZ
 char_damage_weapon = round((char_SIZ + char_STR) / 6)
@@ -877,6 +892,9 @@ match char_religion:
         char_traitSpiritual += 3
         char_traitTrusting -= 3
         char_traitForgiving -= 3
+
+if char_age < 13:
+    char_traitChaste = 20
 
 #Passions
 char_honor = roll_Xd6(2,8)

@@ -97,13 +97,13 @@ echo -----
 echo.
 echo Enter the character's age
 echo.
-echo Default: 21
+echo Default: Random selection between 14 and 75.
 echo.
 echo Supported values are:
-echo Any
+echo Any, but limited by class, Page 7 to 13, Squire 14 to 20, Handmaiden 14 or higher, all other 21 or higher.
 echo.
 set /p char_age=Age:
-if "%char_age%"=="" set char_age=21
+if "%char_age%"=="" set char_age=-1
 echo.
 echo -----
 echo.
