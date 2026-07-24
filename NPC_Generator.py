@@ -532,7 +532,7 @@ DistinctiveFeatures_Negative_Male = [
     ["A Wisp of a Thing (-)", "Flabby (-)", "Gangly (-)", "Gawky (-)", "Hunched (-)", "Overweight (-)", "Paunchy (-)", "Pigeon-Chested (-)", "Rotund (-)", "Round-Shouldered (-)", "Skinny (-)", "Smells Like Feet (-)", "Squat (-)", "Stooped (-)", "Sunken-Chested (-)"],
     ["Bow-Legged (-)", "Knock-Kneed (-)", "Left-Handed (-)", "Tiny Hands (-)", "Misshapen Hands (-)", "Pigeon-Toed (-)", "Spindly (-)", "Withered (-)"],
     ["Bald (-)", "Mangy Hair (-)", "Patchy Hair (-)", "Prematurely Grey Hair (-)", "Prematurely White Hair (-)", "Red Hair (-)", "Thinning Hair (-)"],
-    ["Big Ears (-)", "Crooked or Missing Teeth (-)", "Crumby Mustache (-)", "Droopy Eyelids (-)", "Eyes of Different Colors (-)", "Freckles (-)", "Green Eyes (-)", "Malformed Nose (-)", "Pockmarks (-)", "Rough (-)", "Scars (-)", "Scraggly Beard (-)", "Unibrow (-)"],
+    ["Big Ears (-)", "Crooked Teeth (-)", "Missing Teeth (-)", "Crumby Mustache (-)", "Droopy Eyelids (-)", "Eyes of Different Colors (-)", "Freckles (-)", "Green Eyes (-)", "Malformed Nose (-)", "Pockmarks (-)", "Rough (-)", "Scars (-)", "Scraggly Beard (-)", "Unibrow (-)"],
     ["Bellowing Voice (-)", "Nasal Voice (-)", "Lisp (-)", "Mumbly (-)", "Scratchy Voice (-)", "Sharp Voice (-)", "Shrill Voice (-)", "Squeaky Voice (-)", "Stutter (-)", "Thick and Unpleasant Accent (-)"]
 ];
 DistinctiveFeatures_Positive_Female = [
@@ -546,7 +546,7 @@ DistinctiveFeatures_Negative_Female = [
     ["A Wisp of a Thing (-)", "Flabby (-)", "Gangly (-)", "Gawky (-)", "Hunched (-)", "Lanky (-)", "Overweight (-)", "Paunchy (-)", "Pigeon-Chested (-)", "Rotund (-)", "Round-Shouldered (-)", "Skinny (-)", "Smells Like Feet (-)", "Squat (-)", "Stooped (-)", "Sunken-Chested (-)"],
     ["Bow-Legged (-)", "Knock-Kneed (-)", "Left-Handed (-)", "Tiny Hands (-)", "Misshapen Hands (-)", "Pigeon-Toed (-)", "Spindly (-)", "Withered (-)"],
     ["Bald (-)", "Mangy Hair (-)", "Patchy Hair (-)", "Prematurely Grey Hair (-)", "Prematurely White Hair (-)", "Red Hair (-)", "Thinning Hair (-)"],
-    ["Big Ears (-)", "Crooked or Missing Teeth (-)", "Droopy Eyelids (-)", "Eyes of Different Colors (-)", "Freckles (-)", "Green Eyes (-)", "Malformed Nose (-)", "Pockmarks (-)", "Rough (-)", "Scars (-)", "Scraggly Beard (-)", "Unibrow (-)"],
+    ["Big Ears (-)", "Crooked Teeth (-)", "Missing Teeth (-)", "Droopy Eyelids (-)", "Eyes of Different Colors (-)", "Freckles (-)", "Green Eyes (-)", "Malformed Nose (-)", "Pockmarks (-)", "Rough (-)", "Scars (-)", "Scraggly Beard (-)", "Unibrow (-)"],
     ["Bellowing Voice (-)", "Nasal Voice (-)", "Lisp (-)", "Mumbly (-)", "Scratchy Voice (-)", "Sharp Voice (-)", "Shrill Voice (-)", "Squeaky Voice (-)", "Stutter (-)", "Thick and Unpleasant Accent (-)"]
 ];
 
