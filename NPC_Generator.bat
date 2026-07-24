@@ -100,7 +100,7 @@ echo.
 echo Default: Random selection between 14 and 75.
 echo.
 echo Supported values are:
-echo Any, but limited by class, Page 7 to 13, Squire 14 to 20, Handmaiden 14 or higher, all other 21 or higher.
+echo Any, but limited by class, Pages from 7 to 13, Squires from 14 to 20, Handmaidens 14 and up, all other 21 and up.
 echo.
 set /p char_age=Age:
 if "%char_age%"=="" set char_age=-1
