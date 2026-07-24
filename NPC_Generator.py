@@ -717,7 +717,7 @@ char_name = (args.char_name or (random.choice(Names_Male) if char_gender == "Mal
 
 char_religion = args.char_religion or Religion
 
-char_class = (args.char_class or ("Vassal Knight" if char_gender == "Male" else  "Lady")).title()
+char_class = (args.char_class or ((random.choices(Classes_Martial, weights = [3600, 1800, 1800, 3600, 3600, 1200, 1200, 1200, 200, 50, 10, 3, 3, 1], k = 1)[0]) if char_gender == "Male" else (random.choices(Classes_Ladies, weights = [2500, 1000, 10000, 200, 50, 10, 5], k = 1)[0])))
 
 char_born = args.char_born or 487
 
