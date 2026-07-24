@@ -736,6 +736,13 @@ else:
 if char_age < 13:
     DistinctiveFeatures_Positive_Male.remove("Scraggly Beard (-)")
     DistinctiveFeatures_Positive_Female.remove("Scraggly Beard (-)")
+    DistinctiveFeatures_Positive_Female[0].remove("Buxom (+)")
+    DistinctiveFeatures_Positive_Female[0].remove("Curvy (+)")
+    DistinctiveFeatures_Positive_Female[0].remove("Full Figure (+)")
+    DistinctiveFeatures_Positive_Female[0].remove("Hourglass Figure (+)")
+    DistinctiveFeatures_Positive_Female[0].remove("Petite (+)")
+    DistinctiveFeatures_Positive_Female[0].remove("Statuesque (+)")
+    DistinctiveFeatures_Positive_Female[0].remove("Taut (+)")
 if char_age < 21:
     DistinctiveFeatures_Positive_Male.remove("Luxurious and Combed Beard (+)")
 if char_age < 40:
