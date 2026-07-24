@@ -732,19 +732,19 @@ else:
     char_age = max(21, char_age)
 
 if char_age < 14:
-    DistinctiveFeatures_Positive_Male.remove("Scraggly Beard (-)")
-    DistinctiveFeatures_Positive_Female.remove("Scraggly Beard (-)")
+    DistinctiveFeatures_Positive_Male[3].remove("Scraggly Beard (-)")
+    DistinctiveFeatures_Positive_Female[3].remove("Scraggly Beard (-)")
 if char_age < 21:
-    DistinctiveFeatures_Positive_Male.remove("Luxurious and Combed Beard (+)")
+    DistinctiveFeatures_Positive_Male[3].remove("Luxurious and Combed Beard (+)")
 if char_age < 40:
-    DistinctiveFeatures_Positive_Male.remove("Handsome Grey Hair (+)")
-    DistinctiveFeatures_Positive_Female.remove("Handsome Grey Hair (+)")
+    DistinctiveFeatures_Positive_Male[2].remove("Handsome Grey Hair (+)")
+    DistinctiveFeatures_Positive_Female[2].remove("Handsome Grey Hair (+)")
 if char_age >= 40:
-    DistinctiveFeatures_Negative_Male.remove("Prematurely Grey Hair (-)")
-    DistinctiveFeatures_Negative_Male.remove("Prematurely Grey Hair (-)")
+    DistinctiveFeatures_Negative_Male[2].remove("Prematurely Grey Hair (-)")
+    DistinctiveFeatures_Negative_Female[2].remove("Prematurely Grey Hair (-)")
 if char_age >= 50:
-    DistinctiveFeatures_Negative_Female.remove("Prematurely White Hair (-)")
-    DistinctiveFeatures_Negative_Female.remove("Prematurely White Hair (-)")
+    DistinctiveFeatures_Negative_Male[2].remove("Prematurely White Hair (-)")
+    DistinctiveFeatures_Negative_Female[2].remove("Prematurely White Hair (-)")
 
 char_homeland = (args.char_homeland or "Salisbury").title()
 
