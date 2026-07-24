@@ -53,7 +53,7 @@ echo -----
 echo.
 echo Enter the class of the character.
 echo.
-echo Default: Vassal Knight or Lady (depending on character's gender).
+echo Default: Randomly selected based on gender
 echo.
 echo Supported values are:
 echo Page
@@ -74,7 +74,7 @@ echo -----
 echo.
 echo Enter the name of the character
 echo.
-echo Default: Randomly selected based on culture
+echo Default: Randomly selected based on culture and gender
 echo.
 echo Supported values are:
 echo Any
