@@ -1,7 +1,7 @@
 @echo off
 
 echo Drofseh's Pendragon 6E NPC Generator
-echo v1.1.0
+echo v1.2.0
 echo.
 echo -----
 echo.
