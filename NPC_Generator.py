@@ -867,9 +867,6 @@ char_traitTemperate = roll_Xd6(2,3)
 char_traitTrusting = roll_Xd6(2,3)
 char_traitValorous = roll_Xd6(2,3)
 
-if char_class in Classes_Martial:
-    char_traitValorous += 5
-
 match char_religion:
     case "Christian":
         char_traitChaste += 3
@@ -902,6 +899,9 @@ match char_religion:
 
 if char_age < 13:
     char_traitChaste = 20
+
+if char_class in Classes_Martial:
+    char_traitValorous += 5
 
 #Passions
 char_honor = roll_Xd6(2,8)
