@@ -4,7 +4,7 @@ import argparse
 import re
 from pathlib import Path
 
-version = "v1.1.0"
+version = "v1.2.0"
 
 debug = False
 
@@ -839,6 +839,7 @@ elif char_age < 21:
     char_STR = round(char_SIZ * 0.75)
     char_CON = round(char_SIZ * 0.75)
     char_APP = round(char_SIZ * 0.75)
+
 # Derived Characteristics
 char_knockdown = char_SIZ
 char_damage_weapon = round((char_SIZ + char_STR) / 6)
