@@ -5,9 +5,9 @@ echo v1.2.0
 echo.
 echo -----
 echo.
-echo To use this generator just fill out each option with a value.
+echo To use this generator just fill out each option with a value or leave blank to accept the default value.
 echo Values listed as supported will have a mechanical effect on the output, but non-supported values are accepted.
-echo For example the only supported homeland is Salisbury which gives the character the Hate (Saxons) passion.
+echo For example the only supported homeland is Salisbury which gives the character the Hate (Saxons) passion (unless the character is Saxon).
 echo Entering a different homeland will simply give no bonus.
 echo.
 echo Generation largely adheres to the Player Knight character creation rules from the Core Rulebook, with additions from other published 6E books where appropriate.
@@ -17,6 +17,18 @@ echo Ex. higher ranking class are given additional skill points based on their r
 echo.
 echo -----
 :START
+echo.
+echo Enter the current year of your game
+echo.
+echo Default: 508
+echo.
+echo Supported values are:
+echo Any
+echo.
+set /p current_year=Current Year:
+if "%current_year%"=="" set current_year=508
+echo.
+echo -----
 echo.
 echo Enter the culture of the character
 echo.
@@ -83,18 +95,6 @@ set /p char_name=Name:
 echo.
 echo -----
 echo.
-echo Enter the character's birth year
-echo.
-echo Default: 487
-echo.
-echo Supported values are:
-echo Any
-echo.
-set /p char_born=Birth Year:
-if "%char_born%"=="" set char_born=487
-echo.
-echo -----
-echo.
 echo Enter the character's age
 echo.
 echo Default: Random selection between 14 and 75.
@@ -128,7 +128,7 @@ echo.
 set /p char_lord=Lord's Name:
 
 :GENERATE
-python NPC_Generator.py "%char_gender%" "%char_name%" "%char_born%" "%char_age%" "%char_homeland%" "%char_lord%" "%char_class%" "%char_culture%" "%char_religion%"
+python NPC_Generator.py "%current_year%" "%char_gender%" "%char_name%" "%char_age%" "%char_homeland%" "%char_lord%" "%char_class%" "%char_culture%" "%char_religion%"
 
 echo.
 echo Done!

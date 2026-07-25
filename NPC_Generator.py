@@ -10,6 +10,13 @@ debug = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
+    "current_year",
+    nargs='?',
+    type=int,
+    const=508,
+    help="Character's birth year."
+)
+parser.add_argument(
     "char_gender",
     nargs='?',
     const="",
@@ -20,13 +27,6 @@ parser.add_argument(
     nargs='?',
     const="",
     help="Character's name."
-)
-parser.add_argument(
-    "char_born",
-    nargs='?',
-    type=int,
-    const=487,
-    help="Character's birth year."
 )
 parser.add_argument(
     "char_age",
@@ -565,6 +565,8 @@ Skills_Knightly = list(dict.fromkeys(Skills_Courtly + ["Awareness", "Courtesy", 
 Skills_Lady = list(dict.fromkeys(Skills_Courtly + ["Chirurgery", "Courtesy", "Dancing", "Fashion", "First Aid", "Horsemanship", "Industry", "Play Instrument", "Recognize", "Singing", "Stewardship"]))
 Skills_Minsterly = ["Courtesy", "Industry", "Literacy", "Orate", "Religion", "Singing"]
 
+current_year = args.current_year or 508
+
 char_SIZ = 0
 char_DEX = 0
 char_STR = 0
@@ -719,19 +721,26 @@ char_religion = args.char_religion or Religion
 
 char_class = (args.char_class or ((random.choices(Classes_Martial, weights = [3600, 1800, 1800, 3600, 3600, 1200, 1200, 1200, 200, 50, 10, 3, 3, 1], k = 1)[0]) if char_gender == "Male" else (random.choices(Classes_Ladies, weights = [2500, 1000, 10000, 200, 50, 10, 5], k = 1)[0])))
 
-char_born = args.char_born or 487
-
-char_age = args.char_age or random.randint(14, 75)
 if char_age == -1:
-    char_age = random.randint(14, 75)
-if char_class == "Page":
-    char_age = max(7, min(char_age, 13))
-elif char_class == "Squire":
-    char_age = max(14, min(char_age, 20))
-elif char_class == "Handmaiden":
-    char_age = max(14, char_age)
+    if char_class == "Page":
+        char_age = random.randint(7, 13)
+    elif char_class == "Squire":
+        char_age = random.randint(14, 20)
+    elif char_class == "Handmaiden":
+        char_age = random.randint(14, 75)
+    else:
+        char_age = random.randint(21, 75)
 else:
-    char_age = max(21, char_age)
+    if char_class == "Page":
+        char_age = max(7, min(char_age, 13))
+    elif char_class == "Squire":
+        char_age = max(14, min(char_age, 20))
+    elif char_class == "Handmaiden":
+        char_age = max(14, char_age)
+    else:
+        char_age = max(21, char_age)
+
+char_born = current_year - char_age
 
 if char_age < 13:
     DistinctiveFeatures_Negative_Male[3].remove("Scraggly Beard (-)")
