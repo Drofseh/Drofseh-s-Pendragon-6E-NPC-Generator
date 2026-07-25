@@ -10,6 +10,13 @@ debug = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
+    "current_year",
+    nargs='?',
+    type=int,
+    const=508,
+    help="Current year of game."
+)
+parser.add_argument(
     "char_gender",
     nargs='?',
     const="",
@@ -20,13 +27,6 @@ parser.add_argument(
     nargs='?',
     const="",
     help="Character's name."
-)
-parser.add_argument(
-    "char_born",
-    nargs='?',
-    type=int,
-    const=487,
-    help="Character's birth year."
 )
 parser.add_argument(
     "char_age",
@@ -738,6 +738,7 @@ else:
     else:
         char_age = max(21, char_age)
 
+current_year = args.current_year or 508
 char_born = current_year - char_age
 
 if char_age < 13:
