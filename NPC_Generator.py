@@ -10,13 +10,6 @@ debug = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "current_year",
-    nargs='?',
-    type=int,
-    const=508,
-    help="Character's birth year."
-)
-parser.add_argument(
     "char_gender",
     nargs='?',
     const="",
@@ -27,6 +20,13 @@ parser.add_argument(
     nargs='?',
     const="",
     help="Character's name."
+)
+parser.add_argument(
+    "char_born",
+    nargs='?',
+    type=int,
+    const=487,
+    help="Character's birth year."
 )
 parser.add_argument(
     "char_age",
@@ -564,8 +564,6 @@ Skills_Courtly = ["Compose", "Courtesy", "Dancing", "Falconry", "Fashion", "Flir
 Skills_Knightly = list(dict.fromkeys(Skills_Courtly + ["Awareness", "Courtesy", "First Aid", "Hunting", "Recognize", "Battle", "Charge", "Sword"]))
 Skills_Lady = list(dict.fromkeys(Skills_Courtly + ["Chirurgery", "Courtesy", "Dancing", "Fashion", "First Aid", "Horsemanship", "Industry", "Play Instrument", "Recognize", "Singing", "Stewardship"]))
 Skills_Minsterly = ["Courtesy", "Industry", "Literacy", "Orate", "Religion", "Singing"]
-
-current_year = args.current_year or 508
 
 char_SIZ = 0
 char_DEX = 0
