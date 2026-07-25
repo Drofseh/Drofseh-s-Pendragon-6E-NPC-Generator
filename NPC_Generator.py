@@ -721,15 +721,16 @@ char_religion = args.char_religion or Religion
 
 char_class = (args.char_class or ((random.choices(Classes_Martial, weights = [3600, 1800, 1800, 3600, 3600, 1200, 1200, 1200, 200, 50, 10, 3, 3, 1], k = 1)[0]) if char_gender == "Male" else (random.choices(Classes_Ladies, weights = [2500, 1000, 10000, 200, 50, 10, 5], k = 1)[0])))
 
+char_age = args.char_age or -1
 if char_age == -1:
     if char_class == "Page":
         char_age = random.randint(7, 13)
     elif char_class == "Squire":
         char_age = random.randint(14, 20)
     elif char_class == "Handmaiden":
-        char_age = random.randint(14, 75)
+        char_age = 14 + abs(round(random.gauss(0, 15)))
     else:
-        char_age = random.randint(21, 75)
+        char_age = 20 + abs(round(random.gauss(0, 15)))
 else:
     if char_class == "Page":
         char_age = max(7, min(char_age, 13))

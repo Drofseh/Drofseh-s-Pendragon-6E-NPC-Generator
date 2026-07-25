@@ -97,7 +97,7 @@ echo -----
 echo.
 echo Enter the character's age
 echo.
-echo Default: Random selection between 14 and 75.
+echo Default: Random selection based on class.
 echo.
 echo Supported values are:
 echo Any, but limited by class, Pages from 7 to 13, Squires from 14 to 20, Handmaidens 14 and up, all others 21 and up.
