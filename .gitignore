@@ -180,6 +180,5 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
-Characters/
-Release/
 Source/
+Release/
