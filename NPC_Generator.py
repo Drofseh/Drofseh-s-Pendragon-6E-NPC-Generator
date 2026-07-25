@@ -68,9 +68,8 @@ parser.add_argument(
 args = parser.parse_args()
 
 if debug:
-    with open("debug.txt", "w") as file:
-        file.write(str(args))
-
+    with open("debug.txt", "a") as file:
+        file.write(f"\n{args}")
 
 def roll_Xd6(dice=1, base=0):
     return base + sum(random.randint(1, 6) for _ in range(dice))
@@ -1380,6 +1379,96 @@ else:
         tempSkill = random.choice(list(char_skills.keys()))
         char_skills[tempSkill] += 1
 
+# handle aging for older characters
+if debug:
+    with open("debug.txt", "a") as file:
+        file.write(f"\n{char_name}\n")
+
+isDead = False
+isDecrepit = False
+isInfirm = False
+if char_age > 34:
+    if debug:
+        with open("debug.txt", "a") as file:
+            file.write("Old: ")
+            file.write(f"{char_SIZ}, {char_DEX}, {char_STR}, {char_CON}, {char_APP}\n")
+    for x in range(char_age - 34):
+        if isDead:
+            char_age = 34 + x
+            if debug:
+                with open("debug.txt", "a") as file:
+                    file.write("Dead\n")
+            break
+        if x == 0:
+            pass
+        else:
+            if debug:
+                with open("debug.txt", "a") as file:
+                    file.write(f"{34 + x}: ")
+
+            affected = 0
+            chance = random.randint(1, 10000) # this is the percentile distribution of the core rulebook aging table, see https://anydice.com/program/42f92 and select the "at most" option
+            if chance > 4444:
+                affected += 1
+            if chance > 6667:
+                affected += 1
+            if chance > 8333:
+                affected += 1
+            if chance > 9444:
+                affected += 1
+
+            if affected > 0:
+                for _ in range(affected):
+                    attribute = random.randint(1, 6)
+                    match attribute:
+                        case 1:
+                            if char_SIZ > 5:
+                                char_SIZ -= 1
+                            else:
+                                char_CON -= 1
+                        case 2:
+                            if char_DEX > 5:
+                                char_DEX -= 1
+                            else:
+                                char_CON -= 1
+                        case 3:
+                            if char_STR > 5:
+                                char_STR -= 1
+                            else:
+                                char_CON -= 1
+                        case 4:
+                            char_CON -= 1
+                        case 5:
+                            if char_APP > 5:
+                                char_APP -= 1
+                            else:
+                                char_CON -= 1
+            if char_CON < 6:
+                isDecrepit = True
+                if debug:
+                    with open("debug.txt", "a") as file:
+                        file.write("Decrepit, ")
+                if random.randint(1, 6) > char_CON:
+                    isDead = True
+            if (char_SIZ < 6 or char_DEX < 6 or char_STR < 6 or char_APP < 6):
+                isInfirm = True
+                if debug:
+                    with open("debug.txt", "a") as file:
+                        file.write("Infirm, ")
+            if debug:
+                with open("debug.txt", "a") as file:
+                    file.write(f"{char_SIZ}, {char_DEX}, {char_STR}, {char_CON}, {char_APP}\n")
+
+    # recalculate Derived Characteristics to account for any losses
+    char_knockdown = char_SIZ
+    char_damage_weapon = round((char_SIZ + char_STR) / 6)
+    char_damage_brawling = round((char_SIZ + char_STR) / 6)
+    char_movementRate = round(((char_DEX + char_STR) / 2) + 5)
+    char_woundMajor = char_CON
+    char_healingRate = round(char_CON / 5)
+    char_hitPointsTotal = char_CON + char_SIZ
+    char_uncon = round((char_CON + char_SIZ) / 4)
+
 # Print to file
 def safe_filename(text):
     return re.sub(r'[<>:"/\\|?*]', "_", text)
@@ -1391,6 +1480,19 @@ with filename.open("w", encoding="utf-8") as sys.stdout:
     print("Made with Drofseh's Pendragon 6E NPC Generator")
     print(version)
     print("")
+    if isDead:
+        print(char_name, " has died of old age during character creation, they must've been quite the traveller.", sep="")
+        print("")
+    else:
+        if (isInfirm or isDecrepit):
+            if isInfirm:
+                print(char_name, " is Infirm.", sep="")
+            if isDecrepit:
+                print(char_name, " is Decrepit.", sep="")
+                print("They are bedridden")
+            print("They are retired from active life, spending their last years out of action; entertaining, reminiscing, and enjoying their grandchildren.")
+            print("They turn any title, lands, and arms over to their heir.")
+            print("")
     print("Name:", "", char_name, sep="\t")
     print("Gender:", "", char_gender, sep="\t")
     print("Born:", "", char_born, sep="\t")
